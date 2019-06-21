@@ -40,6 +40,8 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	RectF rect_test(Vec2(1,1), 2.0f,2.0f);
+
 	float dt = frametimer.Mark();
 	ball.Update(dt);
 }
