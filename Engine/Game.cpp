@@ -26,8 +26,9 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2(117.0f,117.0f), Vec2(2.0f,2.0f)*60.0f ),
-	walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight )
+	ball( Vec2(117.0f,117.0f), Vec2(4.0f,4.0f)*60.0f ),
+	walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight ),
+	paddle(gfx.ScreenWidth/2,gfx.ScreenHeight-100.0f)
 {
 }
 
@@ -44,8 +45,11 @@ void Game::UpdateModel()
 	//gfx.DrawRect(walls.left, walls.top, walls.right, walls.bottom, Colors::Red);
 	const float dt = frametimer.Mark();
 	
-	ball.Update(dt);	
+	paddle.Update(wnd.kbd, walls, dt);
+	ball.DoPaddleCollision(paddle);
+	ball.Update(dt);
 	ball.DoWallCollision(walls);
+		
 	
 	/*
 	if (ball.DoWallCollision(walls))
@@ -58,5 +62,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	paddle.Draw(gfx);
 	ball.Draw(gfx);
+	
 }

@@ -56,6 +56,26 @@ bool Ball::DoWallCollision(const RectF& walls)
 	return collided;
 }
 
+bool Ball::DoPaddleCollision(const Paddle& paddle)
+{
+	bool collided = false;
+	const RectF balRect = GetRect();
+	const RectF paddleRect = paddle.GetRect();
+	if (balRect.IsOverlappingWith(paddleRect))
+	{
+		if (pos.y > paddleRect.top && pos.y < paddleRect.bottom)
+		{
+			ReboundX();
+		}
+		else
+		{
+			ReboundY();
+		}		
+		collided = true;
+	}
+	return collided;
+}
+
 RectF Ball::GetRect() const
 {
 	return RectF::FromCenter(pos, radius, radius);

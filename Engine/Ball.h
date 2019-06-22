@@ -2,6 +2,7 @@
 #include "Vec2.h"
 #include "Graphics.h"
 #include "RectF.h"
+#include "Paddle.h"
 
 class Ball {
 
@@ -11,6 +12,7 @@ public:
 	void Draw(Graphics& gfx) const;
 	void Update(float dt);
 	bool DoWallCollision(const RectF& walls);
+	bool DoPaddleCollision(const Paddle& paddle);
 	RectF GetRect() const;
 	void ReboundX();
 	void ReboundY();
