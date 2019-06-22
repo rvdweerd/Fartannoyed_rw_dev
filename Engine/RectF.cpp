@@ -18,16 +18,35 @@ RectF::RectF(float top_in, float left_in, float bottom_in, float right_in)
 	assert( top <= bottom && right >= left);
 }
 
-RectF::RectF(Vec2 topleft, Vec2 bottomright)
+RectF::RectF(const Vec2& topleft, const Vec2& bottomright)
 	:
 	RectF(topleft.y,topleft.x,bottomright.y,bottomright.x)
 {
 	assert( topleft.x < bottomright.x && topleft.y < bottomright.y);
 }
 
-RectF::RectF(Vec2 topleft, float width, float height)
+RectF::RectF(const Vec2& topleft, float width, float height)
 	:
 	RectF(topleft, topleft + Vec2(width,height) )
 {
 	assert(width > 0 && height > 0);
 }
+
+RectF RectF::FromCenter(const Vec2& center, float halfWidth, float halfHeight)
+{
+	Vec2 boxVec(halfWidth,halfHeight);
+	return RectF(center - boxVec , center + boxVec);
+}
+
+bool RectF::IsOverlappingWith(const RectF& other) const
+{
+	return 
+		( top  <= other.bottom && bottom >= other.top  &&
+		  left <= other.right  && right  >= other.left );
+}
+
+RectF RectF::Crop(const float clipSize) const
+{
+	return RectF(top + clipSize, left + clipSize, bottom-clipSize, right-clipSize);
+}
+

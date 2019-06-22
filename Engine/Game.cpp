@@ -26,7 +26,8 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2(100,100), Vec2(1,2)*60.0f )
+	ball( Vec2(117.0f,117.0f), Vec2(2.0f,2.0f)*60.0f ),
+	walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight )
 {
 }
 
@@ -40,10 +41,19 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	RectF rect_test(Vec2(1,1), 2.0f,2.0f);
-
-	float dt = frametimer.Mark();
-	ball.Update(dt);
+	//gfx.DrawRect(walls.left, walls.top, walls.right, walls.bottom, Colors::Red);
+	const float dt = frametimer.Mark();
+	
+	ball.Update(dt);	
+	ball.DoWallCollision(walls);
+	
+	/*
+	if (ball.DoWallCollision(walls))
+	{
+		ball.Update(dt);
+	}
+	*/
+	
 }
 
 void Game::ComposeFrame()
