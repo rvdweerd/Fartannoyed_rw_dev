@@ -24,7 +24,7 @@ void Paddle::Update(const Keyboard& kbd, RectF walls, float dt)
 	//const RectF paddleRect = GetRect();
 	if (kbd.KeyIsPressed(VK_RIGHT)) 
 	{ 
-		pos.x += speed * dt;
+		pos.x += speedX * dt;
 		if ((pos.x + width) >= walls.right)
 		{
 			pos.x = walls.right - width;
@@ -32,7 +32,7 @@ void Paddle::Update(const Keyboard& kbd, RectF walls, float dt)
 	}
 	 if (kbd.KeyIsPressed(VK_LEFT)) 
 	{ 
-		pos.x -= speed * dt;
+		pos.x -= speedX * dt;
 		if (pos.x <= walls.left)
 		{
 			pos.x = walls.left;
@@ -40,7 +40,7 @@ void Paddle::Update(const Keyboard& kbd, RectF walls, float dt)
 	}
 	 if (kbd.KeyIsPressed(VK_UP)) 
 	{ 
-		pos.y -= speed / 2 * dt;
+		pos.y -= speedY * dt;
 		if (pos.y  <= walls.top)
 		{
 			pos.y = walls.top;
@@ -48,7 +48,7 @@ void Paddle::Update(const Keyboard& kbd, RectF walls, float dt)
 	}
 	 if (kbd.KeyIsPressed(VK_DOWN)) 
 	{ 
-		 pos.y += speed / 2 * dt; 
+		 pos.y += speedY * dt; 
 		 if (pos.y + height  >= walls.bottom)
 		{
 			 pos.y = walls.bottom - height;

@@ -27,6 +27,10 @@
 #include "FrameTimer.h"
 #include "RectF.h"
 #include "Paddle.h"
+#include "Sound.h"
+#include "SoundEffect.h"
+#include <random>
+#include "Bricks.h"
 
 class Game
 {
@@ -46,9 +50,17 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	static constexpr int nRows = 6;
+	//static constexpr int nBricksPerRow = 4;
+	std::random_device rd;
+	std::mt19937 rng;
 	Ball ball;
 	FrameTimer frametimer;
 	RectF walls;
 	Paddle paddle;
+	//Bricks bricks[3];
+	RowOfBricks bricksRow[nRows];
+	Sound padSound;
+	SoundEffect brickSound;
 	/********************************/
 };

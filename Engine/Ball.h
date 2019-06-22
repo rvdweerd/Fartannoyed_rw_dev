@@ -3,6 +3,7 @@
 #include "Graphics.h"
 #include "RectF.h"
 #include "Paddle.h"
+#include "Bricks.h"
 
 class Ball {
 
@@ -13,6 +14,7 @@ public:
 	void Update(float dt);
 	bool DoWallCollision(const RectF& walls);
 	bool DoPaddleCollision(const Paddle& paddle);
+	bool DoBrickCollision(Bricks& brick);
 	RectF GetRect() const;
 	void ReboundX();
 	void ReboundY();

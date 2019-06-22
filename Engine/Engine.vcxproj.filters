@@ -16,6 +16,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{8b6c92a8-f65d-451e-80e3-d65773602b92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Media">
+      <UniqueIdentifier>{563f92d7-1c06-44f5-bd67-202331ece3c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChiliWin.h">
@@ -72,6 +75,9 @@
     <ClInclude Include="Paddle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bricks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
@@ -116,6 +122,9 @@
     <ClCompile Include="Paddle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bricks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FramebufferPS.hlsl">
@@ -134,5 +143,25 @@
     <Image Include="Chili.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="fart1.wav">
+      <Filter>Media</Filter>
+    </Media>
+    <Media Include="Sounds\coin.wav">
+      <Filter>Media</Filter>
+    </Media>
+    <Media Include="Sounds\arkbrick.wav">
+      <Filter>Media</Filter>
+    </Media>
+    <Media Include="Sounds\arkpad.wav">
+      <Filter>Media</Filter>
+    </Media>
+    <Media Include="Sounds\fart2.wav">
+      <Filter>Media</Filter>
+    </Media>
+    <Media Include="Sounds\title.wav">
+      <Filter>Media</Filter>
+    </Media>
   </ItemGroup>
 </Project>

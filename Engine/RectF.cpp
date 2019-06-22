@@ -40,9 +40,18 @@ RectF RectF::FromCenter(const Vec2& center, float halfWidth, float halfHeight)
 
 bool RectF::IsOverlappingWith(const RectF& other) const
 {
-	return 
-		( top  <= other.bottom && bottom >= other.top  &&
-		  left <= other.right  && right  >= other.left );
+	return ( top  < other.bottom && bottom > other.top  &&
+		     left < other.right  && right  > other.left     );
+}
+
+bool RectF::IsWithinVerticals(const RectF& other) const
+{
+	return ( left > other.left && right < other.right );
+}
+
+bool RectF::IsWithinHorizontals(const RectF& other) const
+{
+	return ( top <other.bottom && bottom > other.top);
 }
 
 RectF RectF::Crop(const float clipSize) const
