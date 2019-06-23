@@ -26,6 +26,8 @@
 #include "Ball.h"
 #include "FrameTimer.h"
 #include "RectF.h"
+#include "Brick.h"
+#include "Vec2.h"
 
 class Game
 {
@@ -48,5 +50,10 @@ private:
 	Ball ball;
 	FrameTimer frametimer;
 	RectF walls;
+	Brick brick;
+
+	static constexpr float brickWidth = 100.0f;
+	static constexpr float brickHeight = 300.0f;
+
 	/********************************/
 };

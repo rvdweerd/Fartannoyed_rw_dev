@@ -21,34 +21,28 @@ void Ball::Update(float dt)
 bool Ball::DoWallCollision(const RectF& walls)
 {
 	bool collided=false;
-	const RectF balRect = GetRect();
-	//RectF ballBox(pos_tmp.y - radius, pos_tmp.x - radius, pos_tmp.y + radius, pos_tmp.x + radius);
-	//if (!ballBox.IsOverlappingWith( walls.Crop(14.0f) ) )
+	const RectF ballRect = GetRect();
 	
-	if ( balRect.right > walls.right ) 
+	if ( ballRect.right > walls.right ) 
 	{
-		//pos.x += walls.right - balRect.right;
 		pos.x = walls.right - radius;
 		ReboundX();
 		collided = true;
 	}
-	else if ( balRect.left < walls.left) 
+	else if ( ballRect.left < walls.left) 
 	{
-		//pos.x += walls.left - balRect.left;
 		pos.x = walls.left + radius;
 		ReboundX();
 		collided = true;
 	}
-	else if ( balRect.top < walls.top )
+	else if ( ballRect.top < walls.top )
 	{
-		//pos.y += walls.top - balRect.top;
 		pos.y = walls.top + radius;
 		ReboundY();
 		collided = true;
 	}
-	else if ( balRect.bottom > walls.bottom)
+	else if ( ballRect.bottom > walls.bottom)
 	{
-		//pos.y += walls.bottom - balRect.bottom;
 		pos.y = walls.bottom - radius;
 		ReboundY();
 		collided = true;

@@ -21,14 +21,17 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "Vec2.h"
+#include "RectF.h"
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2(117.0f,117.0f), Vec2(2.0f,2.0f)*60.0f ),
+	ball( Vec2(117.0f,117.0f), Vec2(5.0f,5.0f)*60.0f ),
 	walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight )
 {
+	Vec2 topleft(300.0f, 100.0f);
+	brick = Brick(RectF(topleft, brickWidth, brickHeight), Colors::Blue);
 }
 
 void Game::Go()
@@ -41,22 +44,14 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	//gfx.DrawRect(walls.left, walls.top, walls.right, walls.bottom, Colors::Red);
 	const float dt = frametimer.Mark();
-	
 	ball.Update(dt);	
-	ball.DoWallCollision(walls);
-	
-	/*
-	if (ball.DoWallCollision(walls))
-	{
-		ball.Update(dt);
-	}
-	*/
-	
+	ball.DoWallCollision(walls);	
+	brick.DoBallCollision(ball);
 }
 
 void Game::ComposeFrame()
 {
 	ball.Draw(gfx);
+	brick.Draw(gfx);
 }
