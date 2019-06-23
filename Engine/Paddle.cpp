@@ -1,7 +1,12 @@
 #include "Paddle.h"
 //#include "RectF.h"
 
-Paddle::Paddle()
+
+
+Paddle::Paddle(Vec2 pos_in, Color c_in)
+	:
+	pos(pos_in),
+	c(c_in)
 {
 }
 

@@ -10,6 +10,7 @@ public:
 	static RectF FromCenter(const Vec2& center, float halfWidth, float halfHeight);
 	bool IsOverlappingWith(const RectF& other) const;
 	RectF Crop(const float clipSize) const;
+	RectF GetPadded(float padding);
 public:
 	float left;
 	float right;

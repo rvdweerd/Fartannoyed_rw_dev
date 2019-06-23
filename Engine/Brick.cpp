@@ -7,11 +7,11 @@ Brick::Brick(const RectF rect_in, Color col_in)
 {
 }
 
-void Brick::Draw(Graphics& gfx) 
+void Brick::Draw(Graphics& gfx, float brickPadding)
 {
 	if (!isDestroyed)
 	{
-		gfx.DrawRect(rect, c);
+		gfx.DrawRect( rect.GetPadded(brickPadding) , c);
 	}
 }
 

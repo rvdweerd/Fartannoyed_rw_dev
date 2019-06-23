@@ -50,3 +50,8 @@ RectF RectF::Crop(const float clipSize) const
 	return RectF(top + clipSize, left + clipSize, bottom-clipSize, right-clipSize);
 }
 
+RectF RectF::GetPadded(float padding)
+{
+	return RectF( top + padding, left + padding, bottom - padding, right - padding);
+}
+

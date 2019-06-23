@@ -27,11 +27,20 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2(117.0f,117.0f), Vec2(5.0f,5.0f)*60.0f ),
-	walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight )
+	ball( Vec2(float(Graphics::ScreenWidth)/2,450.0f), Vec2(9.0f,-9.0f)*60.0f ),
+	walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight ),
+	pad( Vec2( float(Graphics::ScreenWidth)/2 , 500.0f) , Colors::White)
 {
-	Vec2 topleft(300.0f, 100.0f);
-	brick = Brick(RectF(topleft, brickWidth, brickHeight), Colors::Blue);
+	Color brickColors[4] = { Colors::Yellow , Colors::Blue, Colors::Green, Colors::Red };
+	int i = 0;
+	for (int x = 0; x < nBricksHorizontal; x++)
+	{
+		for (int y = 0; y < nBricksVertical; y++)
+		{
+			brick[i] = Brick( RectF( topleftBrickField + Vec2( x*brickWidth  , y*brickHeight ) , brickWidth, brickHeight), brickColors[y%4] );
+			i++;
+		}
+	}
 }
 
 void Game::Go()
@@ -48,7 +57,13 @@ void Game::UpdateModel()
 	ball.Update(dt);	
 	ball.DoWallCollision(walls);	
 
-	brick.DoBallCollision(ball);
+	for (int i = 0; i < nBricks; i++)
+	{
+		if (brick[i].DoBallCollision(ball))
+		{
+			break;
+		}
+	}
 
 	pad.DoPaddleCollision(ball);
 	pad.Update(wnd.kbd, dt, walls);
@@ -59,6 +74,10 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 	ball.Draw(gfx);
-	brick.Draw(gfx);
+	for (int i = 0; i < nBricks; i++)
+	{
+		brick[i].Draw(gfx, brickPadding);
+	}
+	
 	pad.Draw(gfx);
 }

@@ -23,25 +23,25 @@ bool Ball::DoWallCollision(const RectF& walls)
 	bool collided=false;
 	const RectF ballRect = GetRect();
 	
-	if ( ballRect.right > walls.right ) 
+	if ( ballRect.right >= walls.right ) 
 	{
 		pos.x = walls.right - radius;
 		ReboundX();
 		collided = true;
 	}
-	else if ( ballRect.left < walls.left) 
+	else if ( ballRect.left <= walls.left) 
 	{
 		pos.x = walls.left + radius;
 		ReboundX();
 		collided = true;
 	}
-	else if ( ballRect.top < walls.top )
+	else if ( ballRect.top <= walls.top )
 	{
 		pos.y = walls.top + radius;
 		ReboundY();
 		collided = true;
 	}
-	else if ( ballRect.bottom > walls.bottom)
+	else if ( ballRect.bottom >= walls.bottom)
 	{
 		pos.y = walls.bottom - radius;
 		ReboundY();
