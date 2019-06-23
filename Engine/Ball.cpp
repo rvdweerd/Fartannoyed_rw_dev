@@ -35,7 +35,7 @@ bool Ball::DoWallCollision(const RectF& walls)
 		ReboundX();
 		collided = true;
 	}
-	else if ( ballRect.top <= walls.top )
+	if ( ballRect.top <= walls.top )
 	{
 		pos.y = walls.top + radius;
 		ReboundY();
