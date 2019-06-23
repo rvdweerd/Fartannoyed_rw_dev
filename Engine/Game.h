@@ -28,6 +28,7 @@
 #include "RectF.h"
 #include "Brick.h"
 #include "Vec2.h"
+#include "Paddle.h"
 
 class Game
 {
@@ -51,9 +52,10 @@ private:
 	FrameTimer frametimer;
 	RectF walls;
 	Brick brick;
+	Paddle pad;
 
 	static constexpr float brickWidth = 100.0f;
-	static constexpr float brickHeight = 300.0f;
+	static constexpr float brickHeight = 15.0f;
 
 	/********************************/
 };

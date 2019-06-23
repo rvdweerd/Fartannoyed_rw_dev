@@ -47,11 +47,18 @@ void Game::UpdateModel()
 	const float dt = frametimer.Mark();
 	ball.Update(dt);	
 	ball.DoWallCollision(walls);	
+
 	brick.DoBallCollision(ball);
+
+	pad.DoPaddleCollision(ball);
+	pad.Update(wnd.kbd, dt, walls);
+	
+
 }
 
 void Game::ComposeFrame()
 {
 	ball.Draw(gfx);
 	brick.Draw(gfx);
+	pad.Draw(gfx);
 }
