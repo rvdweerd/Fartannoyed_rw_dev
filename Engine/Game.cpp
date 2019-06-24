@@ -27,9 +27,9 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2(float(Graphics::ScreenWidth)/2,450.0f), Vec2(9.0f,-9.0f)*60.0f ),
+	ball( Vec2(500.0f,450.0f), Vec2(3.0f,0.0f)*60.0f ),
 	walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight ),
-	pad( Vec2( float(Graphics::ScreenWidth)/2 , 500.0f) , Colors::White)
+	pad( Vec2(200.0f, 450.0f) , Colors::White)
 {
 	Color brickColors[4] = { Colors::Yellow , Colors::Blue, Colors::Green, Colors::Red };
 	int i = 0;
@@ -65,19 +65,21 @@ void Game::UpdateModel()
 		}
 	}
 
-	pad.DoPaddleCollision(ball);
-	pad.Update(wnd.kbd, dt, walls);
+	pad.Update(wnd.kbd, dt, walls, ball);
+	pad.DoPaddleCollision(ball,dt);
+
 	
 
 }
 
 void Game::ComposeFrame()
 {
-	ball.Draw(gfx);
+	
 	for (int i = 0; i < nBricks; i++)
 	{
 		brick[i].Draw(gfx, brickPadding);
 	}
 	
 	pad.Draw(gfx);
+	ball.Draw(gfx);
 }

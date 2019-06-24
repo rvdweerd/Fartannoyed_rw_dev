@@ -12,13 +12,13 @@ public:
 	Paddle() = default;
 	Paddle( Vec2 pos_in, Color c_in);
 	void Draw(Graphics &gfx);
-	bool DoPaddleCollision( Ball& ball );
-	void Update(const Keyboard& kbd, float dt, const RectF& walls);
-
+	bool DoPaddleCollision( Ball& ball , float dt);
+	void Update(const Keyboard& kbd, float dt, const RectF& walls, const Ball& ball);
+	Vec2 velocity = Vec2(0, 0);
 private:
 	Vec2 pos;//= Vec2( 300.0f , 500.0f );
 	Color c;// = Colors::White;
-	float speed = 5 * 60.0f;
+	float speed = 2 * 60.0f;
 	float halfWidth = 60.0f;
-	float halfHeight =  10.0f;
+	float halfHeight =  40.0f;
 };

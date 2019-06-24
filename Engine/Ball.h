@@ -15,9 +15,10 @@ public:
 	void ReboundX();
 	void ReboundY();
 
-private:
-	static constexpr float radius = 7.0f;
+public:
+	
 	Vec2 pos;
 	Vec2 vel;
-
+public:
+	static constexpr float radius = 7.0f;
 };

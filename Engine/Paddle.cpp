@@ -15,40 +15,71 @@ void Paddle::Draw(Graphics& gfx)
 	gfx.DrawRect( RectF::FromCenter(pos, halfWidth, halfHeight) , c );
 }
 
-bool Paddle::DoPaddleCollision( Ball& ball ) 
+bool Paddle::DoPaddleCollision( Ball& ball, float dt ) 
 {
 	RectF padRect = RectF::FromCenter(pos, halfWidth, halfHeight);
 	if (padRect.IsOverlappingWith(ball.GetRect()))
 	{
+		float mu = std::abs(ball.vel.x - velocity.x)*dt;
+		if (ball.GetRect().right < padRect.left + mu)
+		{
+			ball.ReboundX();
+			ball.pos.x = padRect.left - ball.radius + velocity.x*dt;
+			if (ball.pos.x < ball.radius) { ball.pos.x = ball.radius;}
+			if (velocity.x < ball.vel.x && velocity.x<0) { ball.vel.x = velocity.x; }
+			
+			return true;
+		}
+		else if (ball.GetRect().left > padRect.right - mu)
+		{
+			ball.ReboundX();
+			ball.pos.x = padRect.right + ball.radius + velocity.x * dt;
+			if (ball.pos.x > Graphics::ScreenWidth - ball.radius) { ball.pos.x = Graphics::ScreenWidth - ball.radius; }
+			if (velocity.x > ball.vel.x && velocity.x > 0) { ball.vel.x = velocity.x; }
+			return true;
+		}
 		ball.ReboundY();
-		return true;
+		
 	}
 	return false;
 }
 
-void Paddle::Update(const Keyboard& kbd , float dt, const RectF& walls)
+void Paddle::Update(const Keyboard& kbd , float dt, const RectF& walls, const Ball& ball)
 {
 	float increment = speed * dt;
+	velocity = Vec2(0, 0);
 	if ( kbd.KeyIsPressed(VK_LEFT) )
 	{
-		if (RectF::FromCenter(pos, halfWidth, halfHeight).left >= increment)
+		if ( int(ball.pos.x) == int(ball.radius) 
+			 && RectF::FromCenter(pos, halfWidth, halfHeight).left - increment < ball.radius * 2 )
 		{
-			pos.x -= increment;
+			pos.x = halfWidth + 2* ball.radius;
+		}
+		else if (RectF::FromCenter(pos, halfWidth, halfHeight).left < increment)
+		{
+			pos.x = halfWidth;
 		}
 		else
 		{
-			pos.x = halfWidth;
+			pos.x -= increment;
+			velocity.x = -speed;
 		}
 	}
 	else if ( kbd.KeyIsPressed(VK_RIGHT) )
 	{
-		if (RectF::FromCenter(pos, halfWidth, halfHeight).right <= Graphics::ScreenWidth - increment)
+		if ( int(ball.pos.x) == int(Graphics::ScreenWidth-ball.radius ) 
+			 && RectF::FromCenter(pos, halfWidth, halfHeight).right + increment > Graphics::ScreenWidth - ball.radius * 2 )
 		{
-			pos.x += increment;
+			pos.x = Graphics::ScreenWidth - halfWidth - 2 * ball.radius ;
+		}
+		else if (RectF::FromCenter(pos, halfWidth, halfHeight).right > Graphics::ScreenWidth - increment)
+		{
+			pos.x = Graphics::ScreenWidth - halfWidth;
 		}
 		else
 		{
-			pos.x = Graphics::ScreenWidth - halfWidth;
+			pos.x += increment;
+			velocity.x = speed;
 		}
 
 	}
