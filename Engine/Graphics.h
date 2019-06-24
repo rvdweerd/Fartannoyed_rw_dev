@@ -58,9 +58,14 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	void DrawRect( int x0,int y0,int x1,int y1,Color c );
+	void DrawRectLines(int x0, int y0, int x1, int y1, Color c);
 	void DrawRect(const RectF& rect, Color& col)
 	{
 		DrawRect(int(rect.left), int(rect.top), int(rect.right), int(rect.bottom) , col);
+	}
+	void DrawRectLines(const RectF& rect, Color col)
+	{
+		DrawRectLines(int(rect.left), int(rect.top), int(rect.right), int(rect.bottom), col);
 	}
 	void DrawCircle( int x,int y,int radius,Color c );
 	~Graphics();
