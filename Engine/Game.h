@@ -49,12 +49,12 @@ private:
 	/********************************/
 	/*  User Variables              */
 	static constexpr float brickWidth = 100.0f;
-	static constexpr float brickHeight = 25.0f;
+	static constexpr float brickHeight = 20.0f;
 	static constexpr float brickPadding = 1.0f;
-	static constexpr int nBricksHorizontal = 6;
-	static constexpr int nBricksVertical = 4;
+	static constexpr int nBricksHorizontal = 2;
+	static constexpr int nBricksVertical = 1;
 	static constexpr int nBricks = nBricksHorizontal * nBricksVertical;
-	Vec2 topleftBrickField = Vec2(10.0f, 50.0f);
+	Vec2 topleftBrickField = Vec2(200.0f, 200.0f);
 	
 	FrameTimer frametimer;
 	

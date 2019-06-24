@@ -27,7 +27,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2(500.0f,450.0f), Vec2(3.0f,0.0f)*60.0f ),
+	ball( Vec2(212.0f,320.0f), Vec2(1.0f/5,-1.0f/5)*60.0f ),
 	walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight ),
 	pad( Vec2(200.0f, 450.0f) , Colors::White)
 {
@@ -57,9 +57,9 @@ void Game::UpdateModel()
 	ball.Update(dt);	
 	ball.DoWallCollision(walls);	
 
-	for (int i = 0; i < nBricks; i++)
+	for (int i = nBricks-1; i >=0; i--)
 	{
-		if (brick[i].DoBallCollision(ball))
+		if (brick[i].DoBallCollision(ball,dt))
 		{
 			break;
 		}

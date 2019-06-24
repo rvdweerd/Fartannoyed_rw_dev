@@ -18,7 +18,7 @@ public:
 private:
 	Vec2 pos;//= Vec2( 300.0f , 500.0f );
 	Color c;// = Colors::White;
-	float speed = 2 * 60.0f;
+	float speed = 5 * 60.0f;
 	float halfWidth = 60.0f;
-	float halfHeight =  40.0f;
+	float halfHeight =  10.0f;
 };
