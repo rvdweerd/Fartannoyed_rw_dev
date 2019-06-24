@@ -17,7 +17,7 @@ void Brick::Draw(Graphics& gfx, float brickPadding)
 
 bool Brick::DoBallCollision(Ball& ball, float dt)
 {
-	if ( !isDestroyed && rect.IsOverlappingWith(ball.GetRect()) )
+	//if ( !isDestroyed && rect.IsOverlappingWith(ball.GetRect()) )
 	{
 		isDestroyed = true;
 		float mu = std::abs(ball.vel.x) * dt;
@@ -38,6 +38,19 @@ bool Brick::DoBallCollision(Ball& ball, float dt)
 		return true;
 	}
 	return false;
+}
+
+float Brick::CheckBallCollision(Ball& ball, float dt)
+{
+	if (!isDestroyed && rect.IsOverlappingWith(ball.GetRect()))
+	{
+		Vec2 dist = ball.pos - rect.GetCenter();
+		return dist.GetLengthSq();
+	}
+	else
+	{
+		return 100000.0f;
+	}
 }
 
 

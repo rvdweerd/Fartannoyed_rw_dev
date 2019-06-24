@@ -11,6 +11,7 @@ public:
 	Brick(const RectF rect_in, Color col_in);
 	void Draw(Graphics& gfx, float brickPadding);
 	bool DoBallCollision(Ball& ball, float dt);
+	float CheckBallCollision(Ball& ball, float dt);
 private:
 	RectF rect;
 	Color c;

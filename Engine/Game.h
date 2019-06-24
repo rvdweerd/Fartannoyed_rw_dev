@@ -51,8 +51,8 @@ private:
 	static constexpr float brickWidth = 100.0f;
 	static constexpr float brickHeight = 20.0f;
 	static constexpr float brickPadding = 1.0f;
-	static constexpr int nBricksHorizontal = 2;
-	static constexpr int nBricksVertical = 1;
+	static constexpr int nBricksHorizontal = 5;
+	static constexpr int nBricksVertical = 4;
 	static constexpr int nBricks = nBricksHorizontal * nBricksVertical;
 	Vec2 topleftBrickField = Vec2(200.0f, 200.0f);
 	

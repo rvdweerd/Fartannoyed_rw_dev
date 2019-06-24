@@ -55,3 +55,8 @@ RectF RectF::GetPadded(float padding)
 	return RectF( top + padding, left + padding, bottom - padding, right - padding);
 }
 
+Vec2 RectF::GetCenter() const
+{
+	return Vec2( (left+right)/2 , (top+bottom)/2 );
+}
+

@@ -11,6 +11,7 @@ public:
 	bool IsOverlappingWith(const RectF& other) const;
 	RectF Crop(const float clipSize) const;
 	RectF GetPadded(float padding);
+	Vec2 GetCenter() const;
 public:
 	float left;
 	float right;
