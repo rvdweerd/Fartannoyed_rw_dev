@@ -27,9 +27,10 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2(212.0f,320.0f), Vec2(13.0f,-13.0f)*60.0f ),
+	ball( Vec2(394.0f,270.0f), Vec2(0.0f,-0.0f)*60.0f ),
 	walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight ),
-	pad( Vec2(200.0f, 450.0f) , Colors::White)
+	pad( Vec2(200.0f, 450.0f) , Colors::White),
+	pad2(Vec2(100.0f, 450.0f), Colors::White)
 {
 	Color brickColors[4] = { Colors::Yellow , Colors::Blue, Colors::Green, Colors::Red };
 	int i = 0;
@@ -45,23 +46,34 @@ Game::Game( MainWindow& wnd )
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
-	UpdateModel();
+	
+	gfx.BeginFrame();
+	float elapsedTime = frametimer.Mark();
+	while (elapsedTime  > 0.0f)
+	{
+		const float dt = std::min(0.01f, elapsedTime);
+		UpdateModel(dt);
+		elapsedTime -= dt;
+	}
 	ComposeFrame();
 	gfx.EndFrame();
 }
 
-void Game::UpdateModel()
+void Game::UpdateModel(float dt)
 {
-	const float dt = frametimer.Mark();
+	//const float dt = frametimer.Mark();
 	ball.Update(dt);	
-	ball.DoWallCollision(walls);	
+	if (ball.DoWallCollision(walls))
+	{
+		pad.ResetCoolDown();
+		pad2.ResetCoolDown();
+	}
 
 	int collisionIndex = -1;
-	float minDist=100000.0f;
+	float minDist=brickWidth*brickWidth;
 	for (int i = 0; i < nBricks; i++)
 	{
-		float brickDist = brick[i].CheckBallCollision(ball, dt);
+		float brickDist = brick[i].CheckBallCollision(ball, dt,brickWidth*brickWidth);
 		if ( brickDist < minDist-1.0f)
 		{
 			minDist = brickDist;
@@ -72,12 +84,16 @@ void Game::UpdateModel()
 	if ( collisionIndex >= 0 )
 	{
 		brick[collisionIndex].DoBallCollision(ball, dt);
+		pad.ResetCoolDown();
+		pad2.ResetCoolDown();
 	}
 	
 
 
-	pad.Update(wnd.kbd, dt, walls, ball);
+	pad.Update(1, wnd.kbd, dt, walls, ball);
+	pad2.Update(2, wnd.kbd, dt, walls, ball);
 	pad.DoPaddleCollision(ball,dt);
+	pad2.DoPaddleCollision(ball, dt);
 
 	
 
@@ -92,5 +108,6 @@ void Game::ComposeFrame()
 	}
 	
 	pad.Draw(gfx);
+	pad2.Draw(gfx);
 	ball.Draw(gfx);
 }

@@ -39,7 +39,7 @@ public:
 	void Go();
 private:
 	void ComposeFrame();
-	void UpdateModel();
+	void UpdateModel(float dt);
 	/********************************/
 	/*  User Functions              */
 	/********************************/
@@ -48,11 +48,11 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	static constexpr float brickWidth = 100.0f;
+	static constexpr float brickWidth = 50.0f;
 	static constexpr float brickHeight = 20.0f;
 	static constexpr float brickPadding = 1.0f;
-	static constexpr int nBricksHorizontal = 5;
-	static constexpr int nBricksVertical = 4;
+	static constexpr int nBricksHorizontal = 10;
+	static constexpr int nBricksVertical = 6;
 	static constexpr int nBricks = nBricksHorizontal * nBricksVertical;
 	Vec2 topleftBrickField = Vec2(200.0f, 200.0f);
 	
@@ -61,6 +61,7 @@ private:
 	Ball ball;
 	RectF walls;
 	Paddle pad;
+	Paddle pad2;
 	Brick brick[nBricks];
 	
 	/********************************/
