@@ -49,20 +49,23 @@ private:
 	/********************************/
 	/*  User Variables              */
 	static constexpr float brickWidth = 50.0f;
-	static constexpr float brickHeight = 20.0f;
+	static constexpr float brickHeight = 30.0f;
 	static constexpr float brickPadding = 1.0f;
-	static constexpr int nBricksHorizontal = 10;
-	static constexpr int nBricksVertical = 6;
+	static constexpr int nBricksHorizontal = 5;
+	static constexpr int nBricksVertical = 1;
 	static constexpr int nBricks = nBricksHorizontal * nBricksVertical;
-	Vec2 topleftBrickField = Vec2(200.0f, 200.0f);
+	
+	Vec2 topleftBrickField = Vec2(200.0f, 150.0f);
 	
 	FrameTimer frametimer;
-	
-	Ball ball;
+	static constexpr float ballEffect = 0.0f;// 3.0f * 60;
+	static constexpr int nPads = 1;
+	static constexpr int nBalls = 1;
+	Ball ball[nBalls];
 	RectF walls;
-	Paddle pad;
-	Paddle pad2;
+	Paddle pad[nPads];
 	Brick brick[nBricks];
 	
+	bool GameOver = false;
 	/********************************/
 };

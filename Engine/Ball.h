@@ -14,9 +14,12 @@ public:
 	RectF GetRect() const;
 	void ReboundX();
 	void ReboundY();
+	void ReboundY(float padLeft, float padRight);
+	void Reset();
 
 public:
-	
+	bool ballGameOver = false;
+	float ballEffect = 0;
 	Vec2 pos;
 	Vec2 vel;
 public:

@@ -22,16 +22,29 @@
 #include "Game.h"
 #include "Vec2.h"
 #include "RectF.h"
+#include "SpriteCodex.h"
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2(394.0f,270.0f), Vec2(0.0f,-0.0f)*60.0f ),
-	walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight ),
-	pad( Vec2(200.0f, 450.0f) , Colors::White),
-	pad2(Vec2(100.0f, 450.0f), Colors::White)
+	//walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight )
+	walls(Vec2(100.0f, 100.0f), 400, 300)
+	
 {
+	for (Paddle& p : pad)
+	{
+		p = Paddle(Vec2(300.0f, gfx.ScreenHeight - 100.0f), Colors::White);
+		//pad2(Vec2(10.0f, 300.0f), 10.0f, 60.0f, Colors::White)
+	}
+	
+	for (Ball& b : ball)
+	{
+		b = Ball(Vec2(300.0f, walls.bottom - 50.0f), Vec2(2.0f, -0.0f) * 60.0f);
+		b.ballEffect = ballEffect;
+	}
+
+
 	Color brickColors[4] = { Colors::Yellow , Colors::Blue, Colors::Green, Colors::Red };
 	int i = 0;
 	for (int x = 0; x < nBricksHorizontal; x++)
@@ -48,66 +61,113 @@ void Game::Go()
 {
 	
 	gfx.BeginFrame();
-	float elapsedTime = frametimer.Mark();
+	
+	/*float elapsedTime = frametimer.Mark();
 	while (elapsedTime  > 0.0f)
 	{
 		const float dt = std::min(0.01f, elapsedTime);
 		UpdateModel(dt);
 		elapsedTime -= dt;
-	}
+	}*/
+	const float dt = frametimer.Mark();
+
+	UpdateModel(dt);
 	ComposeFrame();
 	gfx.EndFrame();
 }
 
 void Game::UpdateModel(float dt)
 {
-	//const float dt = frametimer.Mark();
-	ball.Update(dt);	
-	if (ball.DoWallCollision(walls))
+	if (!GameOver)
 	{
-		pad.ResetCoolDown();
-		pad2.ResetCoolDown();
-	}
-
-	int collisionIndex = -1;
-	float minDist=brickWidth*brickWidth;
-	for (int i = 0; i < nBricks; i++)
-	{
-		float brickDist = brick[i].CheckBallCollision(ball, dt,brickWidth*brickWidth);
-		if ( brickDist < minDist-1.0f)
+		
+		//const float dt = frametimer.Mark();
+		for (Ball& b : ball)
 		{
-			minDist = brickDist;
-			collisionIndex = i;
+			if (wnd.kbd.KeyIsPressed(0x24)) { b.vel *= 1.01f; }
+			if (wnd.kbd.KeyIsPressed(0x23)) { b.vel *= 0.99f; }
+			b.Update(dt);
+			if (b.DoWallCollision(walls))
+			{
+				int count = 0;
+				for (int i = 0; i < nBalls; i++)
+				{
+					if (ball[i].ballGameOver) { count++; }
+				}
+				if (count == nBalls)
+				{
+					GameOver = true;
+				}
+			}
+			/*{
+				pad.ResetCoolDown();
+				pad2.ResetCoolDown();
+			}*/
+
+			int collisionIndex = -1;
+			float minDist = brickWidth * brickWidth;
+			for (int i = 0; i < nBricks; i++)
+			{
+				float brickDist = brick[i].CheckBallCollision(b, dt, brickWidth * brickWidth);
+				if (brickDist < minDist - 1.0f)
+				{
+					minDist = brickDist;
+					collisionIndex = i;
+				}
+			}
+
+			if (collisionIndex >= 0)
+			{
+				brick[collisionIndex].DoBallCollision(b, dt);
+				//pad.ResetCoolDown();
+				//pad2.ResetCoolDown();
+			}
+
+
+			for (int i =0; i<nPads;i++)
+			{
+				pad[i].Update(i+1, wnd.kbd, dt, walls, b);
+				pad[i].DoPaddleCollision(b, dt);
+			}
+			
 		}
 	}
-
-	if ( collisionIndex >= 0 )
+	else
 	{
-		brick[collisionIndex].DoBallCollision(ball, dt);
-		pad.ResetCoolDown();
-		pad2.ResetCoolDown();
+		if (wnd.kbd.KeyIsPressed(VK_RETURN))
+		{
+			GameOver = false;
+			
+			for (Ball& b : ball)
+			{
+				b.Reset();
+			}
+		}
 	}
 	
-
-
-	pad.Update(1, wnd.kbd, dt, walls, ball);
-	pad2.Update(2, wnd.kbd, dt, walls, ball);
-	pad.DoPaddleCollision(ball,dt);
-	pad2.DoPaddleCollision(ball, dt);
-
 	
-
 }
 
 void Game::ComposeFrame()
 {
-	
+	gfx.DrawRectLines(walls.GetPadded(1), Colors::White);
+
 	for (int i = 0; i < nBricks; i++)
 	{
 		brick[i].Draw(gfx, brickPadding);
 	}
 	
-	pad.Draw(gfx);
-	pad2.Draw(gfx);
-	ball.Draw(gfx);
+	for (Paddle& p : pad)
+	{
+		p.Draw(gfx);
+	}
+	
+	for (Ball& b : ball)
+	{
+		b.Draw(gfx);
+	}
+	if (GameOver)
+	{
+		SpriteCodex::DrawGameOver(Vec2(400.0f, 100.0f), gfx);
+	}
 }
