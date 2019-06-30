@@ -29,7 +29,7 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	//walls( Vec2(0.0f,0.0f) , gfx.ScreenWidth , gfx.ScreenHeight )
-	walls(Vec2(100.0f, 100.0f), 400, 300)
+	walls(Vec2(100.0f, 0.0f), 400, 600)
 	
 {
 	for (Paddle& p : pad)

@@ -51,11 +51,11 @@ private:
 	static constexpr float brickWidth = 50.0f;
 	static constexpr float brickHeight = 30.0f;
 	static constexpr float brickPadding = 1.0f;
-	static constexpr int nBricksHorizontal = 5;
-	static constexpr int nBricksVertical = 1;
+	static constexpr int nBricksHorizontal = 9;
+	static constexpr int nBricksVertical = 4;
 	static constexpr int nBricks = nBricksHorizontal * nBricksVertical;
 	
-	Vec2 topleftBrickField = Vec2(200.0f, 150.0f);
+	Vec2 topleftBrickField = Vec2(100.0f, 150.0f);
 	
 	FrameTimer frametimer;
 	static constexpr float ballEffect = 0.0f;// 3.0f * 60;

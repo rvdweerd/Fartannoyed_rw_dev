@@ -46,8 +46,8 @@ bool Ball::DoWallCollision(const RectF& walls)
 		pos.y = walls.bottom - radius;
 		ReboundY();
 		collided = true;
-		ballGameOver = true;
-		vel = Vec2(0.0f, 0.0f);
+		//ballGameOver = true;
+		//vel = Vec2(0.0f, 0.0f);
 	}
 	return collided;
 }
@@ -71,8 +71,8 @@ void Ball::ReboundY(float padLeft, float padRight)
 {
 	vel.y = -vel.y;
 	float relativePosOnPad = (pos.x - padLeft) / (padRight - padLeft);
-	if (relativePosOnPad < 0.25f) { vel.x = max(-ballEffect,vel.x-3.0f * 60.0f); }
-	if (relativePosOnPad > 0.75f) { vel.x = min(ballEffect, vel.x+3.0f * 60.0f); }
+	//if (relativePosOnPad < 0.25f) { vel.x = max(-ballEffect,vel.x-3.0f * 60.0f); }
+	//if (relativePosOnPad > 0.75f) { vel.x = min(ballEffect, vel.x+3.0f * 60.0f); }
 }
 
 void Ball::Reset()

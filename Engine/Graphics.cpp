@@ -352,7 +352,7 @@ void Graphics::DrawRectLines(int x0, int y0, int x1, int y1, Color c)
 		PutPixel(x0, y, c);
 		PutPixel(x1, y, c);
 	}
-	for (int x = x0; x < x1; ++x)
+	for (int x = x0; x <= x1; ++x)
 	{
 		PutPixel(x, y0, c);
 		PutPixel(x, y1, c);
